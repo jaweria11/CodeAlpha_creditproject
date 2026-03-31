@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CredScore AI</title>
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #eef3f9;
+        display: flex;
+        justify-content: center;
+        padding: 40px;
+    }
+
+    .card {
+        width: 400px;
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .header {
+        background: #123a4a;
+        color: white;
+        text-align: center;
+        padding: 25px;
+    }
+
+    .header h1 {
+        margin: 5px 0;
+    }
+
+    .header span {
+        font-size: 12px;
+        background: #2d6d7d;
+        padding: 4px 10px;
+        border-radius: 20px;
+    }
+
+    .form-section {
+        padding: 20px;
+    }
+
+    label {
+        font-size: 14px;
+        color: #333;
+        display: block;
+        margin-top: 15px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 25px;
+        background: #1f5c6d;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn:hover {
+        background: #144652;
+    }
+
+    .result-box {
+        margin: 20px;
+        padding: 15px;
+        border-radius: 15px;
+        background: #f4f8fb;
+        border-left: 5px solid #4CAF50;
+    }
+
+    .score {
+        font-size: 32px;
+        font-weight: bold;
+        color: #123a4a;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="header">
+        <span>AI Credit Engine</span>
+        <h1>CredScore AI</h1>
+        <p style="font-size:12px;">Secure scoring model • real-time analysis</p>
+    </div>
+
+    <div class="form-section">
+
+        <form method="post" action="/predict/">
+            {% csrf_token %}
+
+            <label>Annual Income (USD)</label>
+            <input type="number" name="income" required>
+
+            <label>Total Debt (USD)</label>
+            <input type="number" name="debt" required>
+
+            <label>Payment History</label>
+            <select name="payment_history">
+                <option value="Good">Good – On time</option>
+                <option value="Late">Late</option>
+                <option value="Very Late">Very Late</option>
+            </select>
+
+            <label>Employment Tenure (Years)</label>
+            <input type="number" name="employment_years" required>
+
+            <button class="btn" type="submit">✨ Calculate Credit Score</button>
+        </form>
+
+    </div>
+
+    {% if result %}
+    <div class="result-box">
+        <p><strong>Credit Assessment</strong></p>
+        <div class="score">{{ result }}</div>
+        <p>Reliable • favorable terms</p>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
